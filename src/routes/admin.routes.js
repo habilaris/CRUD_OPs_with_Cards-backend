@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 router.get("/cards", async (req, res) => {
   console.log("Got a request at api/admin/cards");
   const users = await userModel.find();
-  console.log("Fetched users at /api/admin/cards");
+  console.log("Fetched users at /api/admin/cards\n");
   res.status(200).send(users);
 });
 
@@ -18,7 +18,7 @@ router.post("/create-card", async (req, res) => {
     const { name, age, gender } = req.body;
 
     const newUser = await userModel.create({ name, age, gender });
-    res.status(201).send({ message: "User Created" });
+    res.status(201).send({ message: "User Created", newUser });
     console.log("A new user is created.", newUser);
   } catch (err) {
     res.status(400).send({ message: "Could not create the user!" });
@@ -27,10 +27,11 @@ router.post("/create-card", async (req, res) => {
 });
 
 router.put("/update-card", async (req, res) => {
+  console.log(`\n${req.ip} visited /update-card\n`);
   try {
-    const { id, name, age, gender } = req.body;
+    const { card_id, name, age, gender } = req.body;
     const updatedUser = await userModel.findByIdAndUpdate(
-      id,
+      card_id,
       {
         $set: { name, age, gender },
         $inc: { updateCount: 1 },
@@ -40,6 +41,7 @@ router.put("/update-card", async (req, res) => {
         new: true /* Returns the new document instead of the old one*/,
       },
     );
+    console.log("User updated successfully.", updatedUser);
     res.status(200).send({ message: "User has been updated", updatedUser });
   } catch (err) {
     res.status(400).send({ message: "Could not update the user!" });
