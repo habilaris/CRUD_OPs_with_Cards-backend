@@ -12,12 +12,12 @@ router.get("/", (req, res) => {
   res.status(200).send("Hello Admin");
 });
 
-router.get("/cards");
+router.get("/cards", getCards);
 
-router.post("/create-card");
+router.post("/create-card", createCard);
 
-router.put("/update-card");
+router.put("/update-card", updateCard);
 
-router.delete("/delete-card");
+router.delete("/delete-card", deleteCard);
 
 module.exports = router;
