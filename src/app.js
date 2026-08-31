@@ -30,7 +30,6 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
-
 app.use("/api/admin", adminRouter);
 
 /**
