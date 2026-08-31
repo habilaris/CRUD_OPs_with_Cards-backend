@@ -16,9 +16,11 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: [true, "Email is required"],
     unique: true,
-    message: "Email must be unique",
+    // Not valid
+    // message: "Email must be unique",
+
     // regex for email validation
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -27,22 +29,32 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-    message: "Password is required",
+    required: [true, "Password is rrequired"],
+
+    // Not valid again, and fun fact: AI made this mistake because I copied only this model part maybe
+    // message: "Password is required",
     minlength: [6, "Password must be at least 6 characters long"],
   },
-  age: {
-    type: Number,
-    required: true,
-    min: [0, "Age must be a positive number"],
-    message: "Age is required",
+  // age: {
+  //   type: Number,
+  //   required: true,
+  //   min: [0, "Age must be a positive number"],
+  // },
+  gender: {
+    type: String,
+    enum: {
+      values: ["male", "female", "other"],
+      message: "Gender must be male, female, or other",
+    },
   },
-  gender: String,
   // Role of the user, default is "buyer". It can be "admin", "buyer" or "seller". So only three roles are allowed.
   role: {
     type: String,
-    enum: ["admin", "buyer", "seller"],
-    default: "buyer",
+    enum: {
+      values: ["ADMIN", "BUYER", "SELLER"],
+      message: "Role must be ADMIN, BUYER or SELLER",
+    },
+    default: "BUYER",
   },
   updateCount: { type: Number, default: 0 },
 });

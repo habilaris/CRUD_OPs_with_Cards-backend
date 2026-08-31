@@ -1,7 +1,7 @@
 // Server should only start the server.
 const app = require("./src/app");
 const env = require("./src/config/env");
-const swaggerUi = require("");
+// const swaggerUi = require("");
 const connectToDB = require("./src/config/connectToDB");
 
 connectToDB();
